@@ -5,9 +5,7 @@ var help = require("../help/getmf.nav");
 const Portfolio = db.portfolio;
 
 const url=[
-  'https://www.valueresearchonline.com/funds/16324/sbi-focused-equity-fund-direct-plan/?ref_plan_id=16324',
-  'https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/?ref_plan_id=15787',
-  'https://www.valueresearchonline.com/funds/15684/axis-focused-25-fund-direct-plan/?'
+  'https://api.mfapi.in/mf/'
 ];
 
 // Create and Save a new Portfolio
@@ -53,11 +51,29 @@ exports.findAll = (req, res) => {
 
   Portfolio.find(condition)
     .then(async data => {
-      last_nav = await help.getNAV(data[0], url[0]);
-      last_nav = await help.getNAV(data[1], url[1]);
-      last_nav = await help.getNAV(data[2], url[2]);
+
+      console.log("DATA len: " + data.length);
+
+      for (i = 0; i < data.length; i++) {
+        //var my = data[i].mfcode;
+        console.log("MFCODE DATA["+i+"]: "+data[i].type);
+
+        // for (j = 0; j < data.length; j++) {
+        //   if ((url[j].indexOf(my[0]) !== -1) 
+        //       && (url[j].indexOf(my[1]) !== -1)) {
+                last_nav = await help.getNAV(data[i], url[0]);                
+                // console.log("================================");
+                // console.log("data[i].name : url[j]" + data[i].name + " : "+ url[j]);
+                // console.log("================================");
+        //   }
+        // }
+      }
+
+      // last_nav = await help.getNAV(data[0], url[0]);
+      // last_nav = await help.getNAV(data[1], url[1]);
+      // last_nav = await help.getNAV(data[2], url[2]);
       // console.log("last_nav: " + last_nav);
-      console.log("portfolio findAll 0: " + data);
+      //console.log("portfolio findAll 0: " + data);
       res.send(data);
     })
     .catch(err => {

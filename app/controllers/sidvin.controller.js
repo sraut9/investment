@@ -5,13 +5,7 @@ var help = require("../help/getmf.nav");
 const Sidvin = db.sidvin;
 
 const url=[
-  'https://www.valueresearchonline.com/funds/15748/axis-liquid-fund-direct-plan/?ref_plan_id=15748'
-  // 'https://www.valueresearchonline.com/funds/114/franklin-india-bluechip-fund/?ref_plan_id=114',
-  // 'https://www.valueresearchonline.com/funds/219/hdfc-equity-fund/?ref_plan_id=219',
-  // 'https://www.valueresearchonline.com/funds/104/hdfc-top-100-fund/?ref_plan_id=104',
-  // 'https://www.valueresearchonline.com/funds/2886/idfc-multi-cap-fund-regular-plan/?ref_plan_id=2886',
-  // 'https://www.valueresearchonline.com/funds/2138/uti-mid-cap-fund-regular-plan/?ref_plan_id=2138',
-  // 'https://www.valueresearchonline.com/funds/2820/uti-value-opportunities-fund-regular-plan/?ref_plan_id=2820'
+  'https://api.mfapi.in/mf/'
 ];
 
 // Create and Save a new Portfolio
@@ -53,6 +47,8 @@ exports.findAll = (req, res) => {
 
   Sidvin.find(condition)
     .then(async data => {
+
+      console.log("DATA len: " + data.length);
       // let i = 0;
       // data.forEach(async function (value) {
       //     console.log(value);

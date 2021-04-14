@@ -32,10 +32,12 @@ module.exports = {
 
         mf_data.last_nav_price = 0;
 
-        await axios.get(url)
+        console.log("URL: "+url+mf_data.type);
+        await axios.get(url+mf_data.type)
         .then(async response => {
-            mf_data.last_nav_price = await getData(response.data);
-            //console.log("mf_data: :::: " + mf_data);
+            mf_data.last_nav_price = response.data.data[0].nav;
+            // mf_data.last_nav_price = await getData(response.data);
+            console.log("mf_data: :::: " + mf_data);
             //let response2 = await Promise.all(mf_data.last_nav_price);
             //console.log(response2);
             return mf_data.last_nav_price;
