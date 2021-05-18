@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
 
   var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
 
-  Portfolio.find(condition)
+  Portfolio.find(condition).sort( { name: 1 } )
     .then(async data => {
 
       console.log("DATA len: " + data.length);

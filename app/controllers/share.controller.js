@@ -5,28 +5,28 @@ var help = require("../help/getshare.price");
 const Share = db.share;
 
 // prod
-const url=[
-  'https://money.rediff.com/companies/Page-Industries-Ltd/16070088',
-  'https://money.rediff.com/companies/Hdfc-Bank-Ltd/14030055',
-  'https://money.rediff.com/companies/Yes-Bank-Ltd/14030144',
-  'https://money.rediff.com/companies/Maruti-Suzuki-India-Ltd/10520005',
-  'https://money.rediff.com/companies/Marico-Ltd/11120039',
-  'https://money.rediff.com/companies/Sun-Pharmaceutical-Industries-Ltd/12540191',
-  'https://money.rediff.com/companies/Hatsun-Agro-Products-Ltd/11050105',
-  'https://money.rediff.com/companies/Can-Fin-Homes-Ltd/14080002',
-];
+// const url=[
+//   'https://money.rediff.com/companies/Page-Industries-Ltd/16070088',
+//   'https://money.rediff.com/companies/Hdfc-Bank-Ltd/14030055',
+//   'https://money.rediff.com/companies/Yes-Bank-Ltd/14030144',
+//   'https://money.rediff.com/companies/Maruti-Suzuki-India-Ltd/10520005',
+//   'https://money.rediff.com/companies/Marico-Ltd/11120039',
+//   'https://money.rediff.com/companies/Sun-Pharmaceutical-Industries-Ltd/12540191',
+//   'https://money.rediff.com/companies/Hatsun-Agro-Products-Ltd/11050105',
+//   'https://money.rediff.com/companies/Can-Fin-Homes-Ltd/14080002',
+// ];
 
 // local
-// const url=[
-//   'https://money.rediff.com/companies/Can-Fin-Homes-Ltd/14080002',
-//   'https://money.rediff.com/companies/Hatsun-Agro-Products-Ltd/11050105',
-//   'https://money.rediff.com/companies/Hdfc-Bank-Ltd/14030055',
-//   'https://money.rediff.com/companies/Marico-Ltd/11120039',
-//   'https://money.rediff.com/companies/Maruti-Suzuki-India-Ltd/10520005',
-//   'https://money.rediff.com/companies/Page-Industries-Ltd/16070088',
-//   'https://money.rediff.com/companies/Sun-Pharmaceutical-Industries-Ltd/12540191',
-//   'https://money.rediff.com/companies/Yes-Bank-Ltd/14030144'
-// ];
+const url=[
+  'https://money.rediff.com/companies/Can-Fin-Homes-Ltd/14080002',
+  'https://money.rediff.com/companies/Hdfc-Bank-Ltd/14030055',
+  'https://money.rediff.com/companies/Hatsun-Agro-Products-Ltd/11050105',
+  'https://money.rediff.com/companies/Marico-Ltd/11120039',
+  'https://money.rediff.com/companies/Maruti-Suzuki-India-Ltd/10520005',
+  'https://money.rediff.com/companies/Page-Industries-Ltd/16070088',
+  'https://money.rediff.com/companies/Sun-Pharmaceutical-Industries-Ltd/12540191',
+  'https://money.rediff.com/companies/Yes-Bank-Ltd/14030144'
+];
 
 // Create and Save a new Portfolio
 exports.create = (req, res) => {
@@ -63,9 +63,12 @@ exports.create = (req, res) => {
 // Retrieve all Portfolios from the database.
 exports.findAll = (req, res) => {
   const name = req.query.name;
+  console.log("=============Zerodha shares");
+  var mysort = {name: 1};
   var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
+  console.log("condition = "+JSON.stringify(condition));
 
-  Share.find(condition)
+  Share.find().sort(mysort)
     .then(async data => {
       // let i = 0;
       // data.forEach(async function (value) {
@@ -87,7 +90,8 @@ exports.findAll = (req, res) => {
       // last_nav = await help.getPrice(data[9], url[9]);
       // last_nav = await help.getPrice(data[10], url[10]);
       // last_nav = await help.getPrice(data[11], url[11]);
-      //console.log("share findAll 0: " + data);
+      console.log("share findAll data: " + data);
+      console.log("share findAll url: " + url);
       res.send(data);
     })
     .catch(err => {
